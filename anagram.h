@@ -8,4 +8,5 @@ namespace Anagram
     std::vector<std::string> SelectAnagrams(
         const std::string& word,
         const std::vector<std::string>& candidates);
+    bool compareSortedStrings(std::string& word1, std::string& word2);
 } // namespace Anagram

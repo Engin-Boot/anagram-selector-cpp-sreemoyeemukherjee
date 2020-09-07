@@ -3,6 +3,13 @@
 #include <algorithm>
 using namespace std;
 
+bool Anagram::compareSortedStrings(string& word1, string& word2)
+{
+    for (int i = 0; i < word1.length(); i++)
+        if (word1[i] != word2[i])
+            return false;
+}
+
 bool Anagram::WordPairIsAnagram(const std::string& word1, const std::string& word2) {
     //Fill the correct implementation here
     // Sorting both the strings 
@@ -25,9 +32,7 @@ bool Anagram::WordPairIsAnagram(const std::string& word1, const std::string& wor
         return false;
 
     // Comparing sorted strings 
-    for (int i = 0; i < len1; i++)
-        if (sorted1[i] != sorted2[i])
-            return false;
+    Anagram::compareSortedStrings(sorted1, sorted2);
 
     return true;
 }

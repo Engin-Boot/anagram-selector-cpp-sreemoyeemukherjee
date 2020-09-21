@@ -3,11 +3,17 @@
 #include <algorithm>
 using namespace std;
 
-bool Anagram::compareSortedStrings(string& word1, string& word2)
+void Anagram::WordPreprocessing(string& word)
 {
-    for (int i = 0; i < word1.length(); i++)
-        if (word1[i] != word2[i])
-            return false;
+    // Removing white spaces from the strings
+    word.erase(remove_if(word.begin(), word.end(), ::isspace), word.end());
+    // Removing punctuations
+    word.erase(remove_if(word.begin(), word.end(), ::ispunct), word.end());
+    // Getting entire string to one case - lower
+    transform(word.begin(), word.end(), word.begin(), ::tolower);
+    // Sorting each word alphabetically
+    sort(word.begin(), word.end());
+
 }
 
 bool Anagram::WordPairIsAnagram(const std::string& word1, const std::string& word2) {
@@ -15,15 +21,11 @@ bool Anagram::WordPairIsAnagram(const std::string& word1, const std::string& wor
     // Sorting both the strings 
     string sorted1 = word1;
     string sorted2 = word2;
-    // Removing white spaces from the strings
-    sorted1.erase(remove_if(sorted1.begin(), sorted1.end(), ::isspace), sorted1.end());
-    sorted2.erase(remove_if(sorted2.begin(), sorted2.end(), ::isspace), sorted2.end());
-    // Getting entire string to one case - lower
-    transform(sorted1.begin(), sorted1.end(), sorted1.begin(), ::tolower);
-    transform(sorted2.begin(), sorted2.end(), sorted2.begin(), ::tolower);
-    sort(sorted1.begin(), sorted1.end());
-    sort(sorted2.begin(), sorted2.end());
     
+    // pre-processing each word
+    WordPreprocessing(sorted1);
+    WordPreprocessing(sorted2);
+
     int len1 = sorted1.length();
     int len2 = sorted2.length();
 
@@ -32,9 +34,10 @@ bool Anagram::WordPairIsAnagram(const std::string& word1, const std::string& wor
         return false;
 
     // Comparing sorted strings 
-    Anagram::compareSortedStrings(sorted1, sorted2);
+    //Anagram::compareSortedStrings(sorted1, sorted2);
+    if (sorted1 == sorted2)
+        return true;
 
-    return true;
 }
 
 std::vector<std::string> Anagram::SelectAnagrams(
